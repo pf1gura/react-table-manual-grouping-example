@@ -53,6 +53,10 @@ export function getCoreRowModel<TData extends RowData>(): (
               parentRow?.id,
             )
 
+            // Add necessary props to support manual grouping
+            row.groupingColumnId = originalRows[i].groupingColumnId
+            row.groupingValue = originalRows[i][row.groupingColumnId]
+
             // Keep track of every row in a flat array
             rowModel.flatRows.push(row)
             // Also keep track of every row by its ID

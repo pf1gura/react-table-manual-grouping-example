@@ -4,7 +4,8 @@ import {
   useMaterialReactTable,
 } from "material-react-table"
 import { useMemo, useState } from "react"
-import { MockItem, notGroupedMockData } from "./mock"
+import { MockItem, getMockedApiData } from "./mock"
+import { getCoreRowModel } from "./utils"
 
 export default function App() {
   const [grouping, setGrouping] = useState<string[]>(["state"])
@@ -31,7 +32,7 @@ export default function App() {
     [],
   )
 
-  const data = useMemo(() => notGroupedMockData, [grouping])
+  const data = useMemo(() => getMockedApiData(grouping), [grouping])
 
   const table = useMaterialReactTable({
     columns,
@@ -39,8 +40,9 @@ export default function App() {
 
     // Grouping options.
     enableGrouping: true,
-    manualGrouping: false,
+    manualGrouping: true,
     groupedColumnMode: "reorder",
+    getCoreRowModel: getCoreRowModel(),
     onGroupingChange: setGrouping,
     state: {
       grouping,
